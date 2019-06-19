@@ -1,6 +1,25 @@
-<form action="/Actualizar/{{contacto.0}}" method="POST">  <!-- Creamos un formulario con los datos cargados-->
-    <input type="text" name="Nombre" placeholder="Nombre Completo" value="{{contacto.1}}">
-    <input type="text" name="Telefono" placeholder="Telefono: +569 99999999" value="{{contacto.2}}">
-    <input type="email" name="Mail" placeholder="Mail: Ejemplo@ejemplo.com" value="{{contacto.3}}">
-    <button type="submit">Guardar</button>
-</form>
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="col-md-4 offset-md-4">
+    <div class="card card-body">
+        <form action="/Actualizar/{{contacto.0}}" method="POST">  <!-- Creamos un formulario con los datos cargados-->
+            <div class="form-group">
+                <input type="text" name="Nombre" placeholder="Nombre Completo" value="{{contacto.1}}" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="Telefono" placeholder="Telefono: +569 99999999" value="{{contacto.2}}" class="form-control">
+            </div>
+            <div class="form-group">
+                    <input type="email" name="Mail" placeholder="Mail: Ejemplo@ejemplo.com" value="{{contacto.3}}" class="form-control">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success btn-block" type="submit">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

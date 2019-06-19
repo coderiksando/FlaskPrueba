@@ -1,35 +1,64 @@
-{% with mensajes = get_flashed_messages() %}        <!-- Creamos variable mensaje y le asignamos el valor que enviamos desde el controlador-->
-{% if mensajes %}
-    {% for mensaje in mensajes%}
-        <p>{{mensaje}}</p>
-    {% endfor %}
-{% endif %}
-{% endwith %}
-<form action="/AñadirContactos" method="POST">
-    <input type="text" name="Nombre" placeholder="Nombre Completo">
-    <input type="text" name="Telefono" placeholder="Telefono: +569 99999999">
-    <input type="email" name="Mail" placeholder="Mail: Ejemplo@ejemplo.com">
-    <button type="submit">Guardar</button>
-</form>
+{% extends "layout.html" %}
 
-<table>
-    <thead>
-        <tr>
-            <td>Nombre</td>
-            <td>Telefono</td>
-            <td>Mail</td>
-            <td>Operaciones</td>
-        </tr>
-    </thead>
-    <tbody>
-        {% for contacto in contactos %}     <!-- Recorremos la variable enviada y extraemos los datos-->
-            <td>{{contacto.1}}</td>
-            <td>{{contacto.2}}</td>
-            <td>{{contacto.3}}</td>
-            <td>                            <!-- Agregamos botones con referian al contacto para trabajarlos mejor-->
-                <a href="/EditarContactos/{{contacto.0}}">Editar</a>    
-                <a href="/BorrarContactos/{{contacto.0}}">Borrar</a>
-            </td>
-        {% endfor %}
-    </tbody>
-</table>
+{% block body %}
+
+<div class="row">
+    <div class="col-md-5">
+        {% with mensajes = get_flashed_messages() %}        <!-- Creamos variable mensaje y le asignamos el valor que enviamos desde el controlador-->
+        {% if mensajes %}
+            {% for mensaje in mensajes%}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{mensaje}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="card card-body">
+            <form action="/AñadirContactos" method="POST">
+                <div class="form-group">
+                    <input type="text" name="Nombre" placeholder="Nombre Completo" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="Telefono" placeholder="Telefono: +569 99999999" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="Mail" placeholder="Mail: Ejemplo@ejemplo.com" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <table class="table table-striped table-hover table-bordered table-sm bg-white">
+            <thead>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Telefono</td>
+                    <td>Mail</td>
+                    <td>Operaciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contacto in contactos %}     <!-- Recorremos la variable enviada y extraemos los datos-->
+                <tr>
+                    <td>{{contacto.1}}</td>
+                    <td>{{contacto.2}}</td>
+                    <td>{{contacto.3}}</td>
+                    <td>                            <!-- Agregamos botones con referian al contacto para trabajarlos mejor-->
+                        <a class="btn btn-secondary" href="/EditarContactos/{{contacto.0}}">Editar</a>    
+                        <a class="btn btn-danger btn-delete" href="/BorrarContactos/{{contacto.0}}">Borrar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
