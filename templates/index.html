@@ -1,6 +1,35 @@
+{% with mensajes = get_flashed_messages() %}        <!-- Creamos variable mensaje y le asignamos el valor que enviamos desde el controlador-->
+{% if mensajes %}
+    {% for mensaje in mensajes%}
+        <p>{{mensaje}}</p>
+    {% endfor %}
+{% endif %}
+{% endwith %}
 <form action="/AñadirContactos" method="POST">
     <input type="text" name="Nombre" placeholder="Nombre Completo">
     <input type="text" name="Telefono" placeholder="Telefono: +569 99999999">
     <input type="email" name="Mail" placeholder="Mail: Ejemplo@ejemplo.com">
     <button type="submit">Guardar</button>
 </form>
+
+<table>
+    <thead>
+        <tr>
+            <td>Nombre</td>
+            <td>Telefono</td>
+            <td>Mail</td>
+            <td>Operaciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contacto in contactos %}     <!-- Recorremos la variable enviada y extraemos los datos-->
+            <td>{{contacto.1}}</td>
+            <td>{{contacto.2}}</td>
+            <td>{{contacto.3}}</td>
+            <td>                            <!-- Agregamos botones con referian al contacto para trabajarlos mejor-->
+                <a href="/EditarContactos/{{contacto.0}}">Editar</a>    
+                <a href="/BorrarContactos/{{contacto.0}}">Borrar</a>
+            </td>
+        {% endfor %}
+    </tbody>
+</table>
