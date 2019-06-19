@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash   #se importa la clase flask y funcion para renderizar vistas, para manejar urls, ademas de enviar mensajes a las vistas
-from flask_mysqldb import MySQL                     #se importa la clase de mysql es necesario para llevar a cabo conexion
+#se importa la clase flask y funcion para renderizar vistas, para manejar urls, ademas de enviar mensajes a las vistas
+from flask import Flask, render_template, request, redirect, url_for, flash
+#se importa la clase de mysql es necesario para llevar a cabo conexion
+from flask_mysqldb import MySQL
 
 #Conexion con MySQL
 app = Flask(__name__)
@@ -9,9 +11,10 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'test'
 mysql = MySQL(app)                                  #se conservan las conexiones de mysql en variable, se entrega como parametro de conexion las variables de app
 
-#Configuracion de sesiones
+#Configuracion de sesiones, debe existir una sesion para enviar mensajes flash
 app.secret_key = 'miclavesecreta'
 
+#zona de rutas y controladores
 @app.route('/')                                     #cuando inicie el home de la app ingresa a la funcion index
 def Index():
     cur = mysql.connection.cursor()                 #creamos un cursor para hacer consultas en la base de datos
@@ -66,6 +69,8 @@ def BorrarContactos(id):
 
     flash('Contacto eliminado satisfactoriamente')      #texto que se envia a la vista para mostrarlo
     return redirect(url_for('Index'))                   #redireccionamos con la funcion Index
+#fin de la zona de rutas
+
 
 if __name__ == '__main__':
     app.run(port = 8000, debug = True)        #se corre la app y se entrega un puerto de servidor, ademas se activa el debuger
