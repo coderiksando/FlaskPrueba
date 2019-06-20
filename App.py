@@ -39,7 +39,7 @@ def AñadirContactos():
 @app.route('/EditarContactos/<id>')                     #recibimos el valor extra y lo guardamos en la variable id
 def Obtener_Contacto(id):
     cur = mysql.connection.cursor()                     #generamos un cursor que se conecte con la base de datos
-    cur.execute('SELECT * FROM contactos WHERE id = %s', (id))   #ejecutamos la consulta a la base de datos
+    cur.execute('SELECT * FROM contactos WHERE id = {0}'. format(id))   #ejecutamos la consulta a la base de datos
     dato = cur.fetchall()                               #guardamos los datos en una variable
     return render_template('EditarContactos.html', contacto = dato[0])  #renderizamos la vista para editar contactos                      
 
